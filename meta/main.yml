@@ -21,7 +21,7 @@ galaxy_info:
   #  - all
   #  - any
   - name: Fedora
-  #  versions:
+    versions:
   #  - all
   #  - 16
   #  - 17
