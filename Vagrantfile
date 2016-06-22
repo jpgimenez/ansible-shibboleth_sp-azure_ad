@@ -5,6 +5,8 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+
   config.vm.define "test", primary: true, autostart: true do |test|
     test.vm.box = "trusty64"
 
@@ -20,23 +22,25 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "f23", primary: false, autostart: false do |f23|
     f23.vm.box = "fedora-23"
 
-    test.vm.network "forwarded_port", guest: 80, host: 8080
-    test.vm.network "forwarded_port", guest: 443, host: 8081
+    f23.vm.network "forwarded_port", guest: 80, host: 9080
+    f23.vm.network "forwarded_port", guest: 443, host: 9081
+    f23.vm.network "forwarded_port", guest: 8080, host: 9082
 
     f23.vm.provision "ansible" do |ansible|
       ansible.playbook = "test.yml"
     end
   end
 
-  config.vm.define "centos70", primary: false, autostart: false do |centos70|
-    centos70.vm.box = "chef/centos-7.0"
+  config.vm.define "centos7", primary: false, autostart: false do |centos7|
+    centos7.vm.box = "centos/7"
 
-    test.vm.network "forwarded_port", guest: 80, host: 8080
-    test.vm.network "forwarded_port", guest: 443, host: 8081
+    centos7.vm.network "forwarded_port", guest: 80, host: 9080
+    centos7.vm.network "forwarded_port", guest: 443, host: 9081
+    centos7.vm.network "forwarded_port", guest: 8080, host: 9082
 
-    centos70.vm.provision "ansible" do |ansible|
+    centos7.vm.provision "ansible" do |ansible|
       ansible.playbook = "test.yml"
-      ansible.verbose = "vvv"
+#      ansible.verbose = "vvv"
     end
   end
 
