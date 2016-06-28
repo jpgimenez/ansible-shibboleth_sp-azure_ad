@@ -50,17 +50,20 @@
 
 - name: Create self-signed SSL cert
   sudo: yes
+  when: shibboleth_sp.certificate_subject is defined and shibboleth_sp.certificate_subject
   command: openssl req -new -nodes -x509 -subj "/{{ shibboleth_sp.certificate_subject }}/CN={{ shibboleth_sp.host }}/emailAddress={{ shibboleth_sp.certificate_mail }} " -days 3650 -keyout /etc/shibboleth/{{ shibboleth_sp.host }}.shibboleth.key -out /etc/shibboleth/{{ shibboleth_sp.host }}.shibboleth.crt
            creates=/etc/shibboleth/{{ shibboleth_sp.host }}.shibboleth.key
 
 - name: Setup shibboleth2.xml
   sudo: yes
+  when: shibboleth_sp.federation_metadata_url is defined and shibboleth_sp.federation_metadata_url
   template: dest=/etc/shibboleth/shibboleth2.xml
             src=shibboleth2.xml.j2
   notify: restart shibd
 
 - name: Setup shibboleth2 attribute-map.xml
   sudo: yes
+  when: shibboleth_sp.federation_metadata_url is defined and shibboleth_sp.federation_metadata_url
   template: dest=/etc/shibboleth/attribute-map.xml
             src=attribute-map.xml.j2
   notify: restart shibd
