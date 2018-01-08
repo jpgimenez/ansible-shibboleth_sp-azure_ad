@@ -48,9 +48,13 @@ To test with default vagrant vm:
 
 	$ vagrant up test
 
-You can test against other distros too, ej. f23:
+You can test against other distros too, ej. fedora:
 
-	$ vagrant up f23
+	$ vagrant up fedora
+
+or centos:
+
+	$ vagrant up centos7
 
 Dependencies
 ------------

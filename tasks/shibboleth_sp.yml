@@ -3,7 +3,6 @@
   when: ansible_os_family == 'Debian'
   apt: pkg={{ item }} state=present
   with_items:
-    - python-pip
     - apache2
     - libapache2-mod-shib2
 
