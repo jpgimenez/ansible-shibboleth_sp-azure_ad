@@ -34,7 +34,7 @@
       uri:
         url: http://127.0.0.1:80/
         method: GET
-        status_code: 200
+        status_code: 200, 403
 
     - name: Check to see if apache shib2 module is loaded
       uri:
@@ -42,6 +42,7 @@
         method: GET
         status_code: 200
         validate_certs: no
+      when: ansible_os_family == 'Debian'
 
   handlers:
     - include: handlers/main.yml
