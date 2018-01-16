@@ -24,7 +24,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.define "fedora", primary: false, autostart: false do |fedora|
-    fedora.vm.box = "fedora/27-atomic-host"
+    fedora.vm.box = "fedora/27-cloud-base"
 
     fedora.vm.network "forwarded_port", guest: 80, host: 9080
     fedora.vm.network "forwarded_port", guest: 443, host: 9081
@@ -33,7 +33,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     fedora.vm.provision "ansible" do |ansible|
       ansible.playbook = "test.yml"
       ansible.host_vars = {
-        "fedora" => {"ansible_python_interpreter" => "/usr/bin/python3"
+        "fedora" => {"ansible_python_interpreter" => "/usr/bin/python2"
                     },
       }
     end
